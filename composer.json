@@ -15,6 +15,7 @@
         "symfony/yaml": "7.0.*"
     },
     "require-dev": {
+        "phpspec/phpspec": "^7.5"
     },
     "config": {
         "bin-dir": "bin",
