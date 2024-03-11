@@ -1,3 +1,12 @@
+###> 🐙 Project related ###
+/bin
+!/bin/console
+!/bin/phpunit
+/cypress/downloads
+/cypress/screenshots
+/cypress/videos
+###< 🐙 Project related ###
+
 
 ###> symfony/framework-bundle ###
 /.env.local
