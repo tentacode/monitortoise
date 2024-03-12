@@ -23,6 +23,9 @@ cs: ## Fix coding style
 stan: ## Static analysis
 	bin/phpstan --memory-limit=1G
 
+e2e: ## Run end-to-end tests
+	pnpm exec cypress open
+
 test: ## Run all tests
 	bin/phpstan --memory-limit=1G
 	bin/ecs
