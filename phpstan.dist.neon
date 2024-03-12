@@ -1,0 +1,12 @@
+parameters:
+    paths:
+        - bin
+        - config
+        - public
+        - spec
+        - src
+
+    level: max
+
+    #excludePaths:
+    #    - app/Something.php
