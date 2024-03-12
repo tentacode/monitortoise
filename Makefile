@@ -5,6 +5,7 @@ help:
 
 install: ## Project setup
 	composer install
+	pnpm install
 
 serve: ## Local project run
 	symfony serve
