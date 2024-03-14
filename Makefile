@@ -6,6 +6,10 @@ help:
 install: ## Project setup
 	composer install
 	pnpm install
+	pnpm run dev
+
+watch: ## Watch assets
+	pnpm run watch
 
 serve: ## Local project run
 	symfony serve -d
