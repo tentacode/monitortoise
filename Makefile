@@ -8,7 +8,7 @@ install: ## Project setup
 	pnpm install
 
 serve: ## Local project run
-	symfony serve
+	symfony serve -d
 
 reset: ## Reset database
 	bin/console postgres:close-connections

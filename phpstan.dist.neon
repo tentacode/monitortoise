@@ -3,7 +3,6 @@ parameters:
         - bin
         - config
         - public
-        - spec
         - src
 
     level: max
