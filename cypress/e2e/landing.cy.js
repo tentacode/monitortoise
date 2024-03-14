@@ -1,7 +1,7 @@
 describe('landing page', () => {
-  it('display symfony version', () => {
+  it('contains the proper content', () => {
     cy.visit('/')
 
-    cy.contains('🐢 Monitortoise landing page')
+    cy.contains('The best tech watch of your LIFE BB.')
   })
 })
