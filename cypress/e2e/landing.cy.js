@@ -1,9 +1,7 @@
 describe('landing page', () => {
   it('display symfony version', () => {
-    cy.visit('/', {
-      failOnStatusCode: false
-    })
+    cy.visit('/')
 
-    cy.contains('Welcome to Symfony 7')
+    cy.contains('🐢 Monitortoise landing page')
   })
 })
