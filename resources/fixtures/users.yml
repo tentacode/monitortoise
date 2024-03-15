@@ -1,0 +1,6 @@
+App\Entity\User:
+    user_gabriel:
+        username: tentacode
+        email: gabriel@tentacode.test
+        uuid: <uuid()>
+        registeredAt: <datetime()>
