@@ -1,0 +1,7 @@
+---
+- name: Copying server nginx configuration
+  template:
+    src: "monitortoise.nginx.conf.j2"
+    dest: /etc/nginx/sites-enabled/monitortoise.conf
+  notify: restart web services
+  become: yes

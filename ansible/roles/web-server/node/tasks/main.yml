@@ -1,0 +1,28 @@
+---
+- name: Install curl
+  apt: name=curl state=present
+  become: yes
+
+- name: Checking if nvm is installed
+  stat:
+    path: ~/.nvm
+  register: nvm_installed
+
+- name: Installing nvm
+  command:  bash -c "curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash"
+  when: nvm_installed.stat.exists == false
+
+- name: Installing node
+  shell: source ~/.nvm/nvm.sh && nvm install {{ node.version }}
+  args:
+    executable: /bin/bash
+
+- name: Installing pnpm
+  shell: source ~/.nvm/nvm.sh && npm install pnpm --global
+  args:
+    executable: /bin/bash
+
+- name: Setting up pnpm
+  shell: source ~/.nvm/nvm.sh && pnpm setup
+  args:
+    executable: /bin/bash

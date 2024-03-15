@@ -1,0 +1,13 @@
+---
+- name: Installing pip
+  apt:
+    name: python3-pip
+    update_cache: yes
+  become: yes
+
+- name: Make sure psycopg2 is installed (used for postgresql roles)
+  pip:
+    name: psycopg2-binary
+    state: present
+    umask: "0022"
+  become: yes

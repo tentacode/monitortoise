@@ -1,0 +1,43 @@
+---
+- name: Add postgresql apt key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+  become: yes
+
+- name: Add postgresql repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main
+    state: present
+  become: yes
+
+- name: Install acl module (needed to add a user)
+  apt:
+    name: acl
+    state: present
+  become: yes
+
+- name: Install postgresql
+  apt:
+    name: postgresql-{{ postgresql.version }}
+    state: present
+  become: yes
+  register: install_postgresql
+
+- name: Copying pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/{{ postgresql.version }}/main/pg_hba.conf
+  become: yes
+
+- name: Force postgresql service to start
+  service: name=postgresql state=started enabled=yes
+  become: yes
+
+- name: Creating superuser postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgresql.user }}"
+    password: "{{ postgresql.password }}"
+    role_attr_flags: SUPERUSER

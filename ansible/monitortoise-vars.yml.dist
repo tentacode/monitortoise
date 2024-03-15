@@ -1,0 +1,50 @@
+server:
+  timezone: Europe/Paris
+
+user:
+  name: gabriel
+  group: gabriel
+  home_directory: /home/gabriel
+  workspace_directory: /home/gabriel
+  prompt: '{monitortoise}'
+
+git:
+  name: tentacode
+  email: CHANGE_ME
+  ssh_private_key: /Users/gabriel/.ssh/ssh_github
+  ssh_public_key: /Users/gabriel/.ssh/ssh_github.pub
+
+node:
+  version: 20
+
+php:
+  max_upload_size_mb: 10
+  version: 8.3
+  extensions:
+      - curl
+      - intl
+      - mbstring
+      - pgsql
+      - simplexml
+      - zip
+
+smtp:
+    host: CHANGE_ME
+    port: 587
+    username: CHANGE_ME
+    password: CHANGE_ME
+    from_address: CHANGE_ME
+
+postgresql:
+  version: 16
+  user: monitortoise
+  password: CHANGE_ME
+  database_name: monitortoise
+  extensions: []
+
+letsencrypt:
+  domain: CHANGE_ME
+  email: CHANGE_ME
+
+monitortoise:
+  secret: CHANGE_ME
