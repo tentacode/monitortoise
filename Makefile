@@ -19,7 +19,7 @@ reset: ## Reset database
 	bin/console doctrine:database:drop --force --if-exists
 	bin/console doctrine:database:create
 	bin/console doctrine:migration:migrate --no-interaction
-	bin/console fixtures:load --no-interaction
+	bin/console doctrine:fixture:load --append
 
 cs: ## Fix coding style
 	bin/ecs --fix

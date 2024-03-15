@@ -47,9 +47,6 @@ jobs:
       - name: Setup project
         run: make install
 
-      # - name: Load data
-      #   run: make reset
-
       - name: Phpstan
         run: bin/phpstan --memory-limit=1G
 
@@ -74,6 +71,9 @@ jobs:
 
       - name: Run server
         run: make serve
+
+      - name: Load data
+        run: make reset
 
       - name: End to end tests
         run: pnpm cypress run
