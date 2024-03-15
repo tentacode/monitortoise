@@ -1,0 +1,55 @@
+---
+- name: Cloning monitortoise
+  git:
+    repo: git@github.com:tentacode/monitortoise.git
+    update: yes
+    force: yes
+    dest: "{{ user.workspace_directory }}/monitortoise"
+    accept_hostkey: yes
+
+- name: Copying env file
+  template:
+    src: ".env.j2"
+    dest: "{{ user.workspace_directory }}/monitortoise/.env.local"
+
+- name: Checking that the .env.local file does not contain any "CHANGE_ME" values
+  shell: grep -q CHANGE_ME {{ user.workspace_directory }}/monitortoise/.env.local
+  register: env_file_contains_change_me
+  ignore_errors: yes
+
+- name: Fail if the .env.local file contains "CHANGE_ME" values
+  fail:
+    msg: "The .env.local file contains 'CHANGE_ME' values. Please fill in the required values."
+  when: env_file_contains_change_me.rc == 0
+
+- name: Installing composer dependencies
+  shell: composer install --no-interaction
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+
+- name: Creating database
+  shell: php bin/console doctrine:database:create --if-not-exists
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+
+- name: Run migrations
+  shell: php bin/console doctrine:migrations:migrate --no-interaction
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+
+- name: Clearing cache
+  shell: php bin/console cache:clear
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+
+- name: Installing frontend dependencies
+  shell: source ~/.nvm/nvm.sh && pnpm install
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+    executable: /bin/bash
+
+- name: Building frontend
+  shell: source ~/.nvm/nvm.sh && pnpm build
+  args:
+    chdir: "{{ user.workspace_directory }}/monitortoise"
+    executable: /bin/bash

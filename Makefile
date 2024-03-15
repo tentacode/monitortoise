@@ -34,3 +34,9 @@ test: ## Run all tests
 	bin/phpstan --memory-limit=1G
 	bin/ecs
 	bin/console lint:twig templates
+
+provision-server: ## Provision server
+	ansible-playbook -i ansible/hosts ansible/provision-server.yml --extra-vars="@ansible/monitortoise-vars.yml"
+
+deploy: ## Deploy main to server
+	ansible-playbook -i ansible/hosts ansible/deploy.yml --extra-vars="@ansible/monitortoise-vars.yml"
