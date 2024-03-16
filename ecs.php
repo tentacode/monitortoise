@@ -25,4 +25,11 @@ return static function (ECSConfig $ecsConfig): void {
         SetList::CLEAN_CODE,
         SetList::STRICT,
     ]);
+
+    $ecsConfig->skip([
+        // this fixer forbid to chain methods on a single line (useful in phpspec "should" methods)
+        Symplify\CodingStandard\Fixer\Spacing\MethodChainingNewlineFixer::class,
+        // this fixer is painful when using sprintf
+        Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer::class,
+    ]);
 };

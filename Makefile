@@ -32,8 +32,9 @@ e2e: ## Run end-to-end tests
 
 test: ## Run all tests
 	bin/phpstan --memory-limit=1G
-	bin/ecs
+	bin/phpspec run
 	bin/console lint:twig templates
+	bin/ecs
 
 provision-server: ## Provision server
 	ansible-playbook -i ansible/hosts ansible/provision-server.yml --extra-vars="@ansible/monitortoise-vars.yml"

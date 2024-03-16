@@ -5,88 +5,73 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Uid\Uuid;
+use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity('uuid')]
 #[UniqueEntity('email')]
 #[UniqueEntity('username')]
-class User
+final class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::GUID)]
-    private ?string $uuid = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $uuid;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column(length: 255, unique: true)]
+    private string $email;
 
-    #[ORM\Column(length: 30)]
-    private ?string $username = null;
+    #[ORM\Column(length: 30, unique: true)]
+    private string $username;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $registeredAt = null;
+    private \DateTimeImmutable $registeredAt;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastSeenAt = null;
+
+    public function __construct(string $email, string $username)
+    {
+        Assert::email($email);
+        Assert::lengthBetween($username, 3, 30);
+
+        $this->email = $email;
+        $this->username = $username;
+        $this->registeredAt = new \DateTimeImmutable();
+        $this->uuid = Uuid::v4();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUuid(): ?string
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
 
-    public function setUuid(string $uuid): static
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getRegisteredAt(): ?\DateTimeImmutable
+    public function getRegisteredAt(): \DateTimeImmutable
     {
         return $this->registeredAt;
-    }
-
-    public function setRegisteredAt(\DateTimeImmutable $registeredAt): static
-    {
-        $this->registeredAt = $registeredAt;
-
-        return $this;
     }
 
     public function getLastSeenAt(): ?\DateTimeImmutable
@@ -94,10 +79,8 @@ class User
         return $this->lastSeenAt;
     }
 
-    public function setLastSeenAt(?\DateTimeImmutable $lastSeenAt): static
+    public function refreshLastSeenAt(): void
     {
-        $this->lastSeenAt = $lastSeenAt;
-
-        return $this;
+        $this->lastSeenAt = new \DateTimeImmutable();
     }
 }
