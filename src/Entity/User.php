@@ -16,7 +16,7 @@ use Webmozart\Assert\Assert;
 #[UniqueEntity('uuid')]
 #[UniqueEntity('email')]
 #[UniqueEntity('username')]
-final class User
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
