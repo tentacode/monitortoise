@@ -27,14 +27,12 @@ class CreateUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        global $email, $username;
-
-        ($this->loopOnError)($io, function () use ($io) {
+        ($this->loopOnError)($io, function () use ($io, &$email) {
             $email = $io->ask('Email?');
             Assert::email($email);
         });
 
-        ($this->loopOnError)($io, function () use ($io) {
+        ($this->loopOnError)($io, function () use ($io, &$username) {
             $username = $io->ask('Username?');
             Assert::string($username);
             Assert::lengthBetween($username, 3, 30);
