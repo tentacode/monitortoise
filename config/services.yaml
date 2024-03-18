@@ -26,3 +26,5 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface: '@security.authenticator.login_link_handler.main'
+

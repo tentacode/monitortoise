@@ -21,6 +21,13 @@ reset: ## Reset database
 	bin/console doctrine:migration:migrate --no-interaction
 	bin/console doctrine:fixture:load --append
 
+reset-test: ## Reset test database
+	bin/console postgres:close-connections --env=test
+	bin/console doctrine:database:drop --force --if-exists --env=test
+	bin/console doctrine:database:create --env=test
+	bin/console doctrine:migration:migrate --no-interaction --env=test
+	bin/console doctrine:fixture:load --append --env=test
+
 cs: ## Fix coding style
 	bin/ecs --fix
 
@@ -30,9 +37,12 @@ stan: ## Static analysis
 e2e: ## Run end-to-end tests
 	pnpm exec cypress open
 
+unit: ## Run unit tests
+	bin/phpunit --testdox
+
 test: ## Run all tests
 	bin/phpstan --memory-limit=1G
-	bin/phpspec run
+	bin/phpunit --testdox
 	bin/console lint:twig templates
 	bin/ecs
 

@@ -7,14 +7,11 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20240316085509_user_uuid_type extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Changing user.uuid type to match Symfony UUID type.';
     }
 
     public function up(Schema $schema): void

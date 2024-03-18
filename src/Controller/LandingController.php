@@ -10,8 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LandingController extends AbstractController
 {
-    #[Route('/', name: 'app_landing')]
-    public function index(): Response
+    #[Route('/', name: 'landing')]
+    public function __invoke(): Response
     {
         return $this->render('landing/landing.html.twig');
     }

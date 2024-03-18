@@ -6,5 +6,6 @@ module.exports = defineConfig({
     },
     baseUrl: "http://127.0.0.1:8000",
     experimentalRunAllSpecs: true,
+    chromeWebSecurity: false,
   },
 });

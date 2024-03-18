@@ -1,0 +1,10 @@
+{% extends 'emails/base_email.html.twig' %}
+
+{% block body %}
+<p>Hey! Here is your link.</p>
+
+{% include 'emails/components/_cta.html.twig' with {
+    'cta_url': magic_login_link_url,
+    'cta_text': 'Log In With Magic Link'
+} %}
+{% endblock %}

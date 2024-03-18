@@ -1,0 +1,6 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        headers:
+            From: 'Monitortoise <support@monitortoise.test>'
+            X-Metadata-Project: 'monitortoise'

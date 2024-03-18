@@ -40,18 +40,23 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 8
+      
+      - name: Setup mailpit server
+        run: |
+          sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
+          /usr/local/bin/mailpit &
 
       - name: Preparing .env file for github
         run: cp .env .env.local
+
+      - name: Changing APP_ENV to test
+        run: sed -i 's/APP_ENV=dev/APP_ENV=test/' .env.local
 
       - name: Setup project
         run: make install
 
       - name: Phpstan
         run: bin/phpstan --memory-limit=1G
-
-      - name: Phpspec
-        run: bin/phpspec run
 
       - name: Automatic code sniffer fixing
         run: bin/ecs --fix
@@ -73,12 +78,23 @@ jobs:
         run: make serve
 
       - name: Load data
-        run: make reset
+        run: make reset-test
+
+      - name: Unit and integration tests
+        run: bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped
 
       - name: End to end tests
         run: pnpm cypress run
 
       # On failure
+      - name: Get failing screenshots
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: cypress-screenshots
+          path: |
+            cypress/screenshots
+      
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         if: ${{ failure() }}
