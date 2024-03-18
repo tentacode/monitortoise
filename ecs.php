@@ -10,8 +10,8 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
         __DIR__ . '/bin',
         __DIR__ . '/public',
-        __DIR__ . '/spec',
         __DIR__ . '/src',
+        __DIR__ . '/tests',
     ]);
 
     $ecsConfig->ruleWithConfiguration(ArraySyntaxFixer::class, [

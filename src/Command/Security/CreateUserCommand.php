@@ -38,6 +38,10 @@ class CreateUserCommand extends Command
             Assert::lengthBetween($username, 3, 30);
         });
 
+        /**
+         * @var string $email
+         * @var string $username
+         */
         $user = ($this->createNewUser)($email, $username);
 
         $io->success(sprintf(

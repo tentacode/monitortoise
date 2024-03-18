@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign in with a magic link!{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% form_theme magicLinkRequestForm _self %}
+
+{% block form_row %}
+    {{- form_widget(form) -}}
+    {{- form_errors(form) -}}
+{% endblock %}
+
+{% block email_widget %}
+    {% set attr = attr|merge({class: 'magicLinkEmailInput'}) %}
+    {% if errors|length > 0 %}
+        {% set attr = attr|merge({class: 'magicLinkEmailInput inputError'}) %}
+    {% endif %}
+
+    <div class="relative mt-2 rounded-md shadow-sm">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            {% if errors|length > 0 %}
+                <svg class="h-5 w-5 text-red-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            {% else %}
+                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            {% endif %}
+                <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
+                <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+            </svg>
+        </div>
+        
+        <input  data-testid="magic_link_email" type="email" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    </div>
+{% endblock %}
+
+{%- block form_errors -%}
+    {%- for error in errors -%}
+        <p class="mt-2 text-sm text-red-600" id="email-error">{{ error.message }}</p>
+    {%- endfor -%}
+{% endblock %}
+
+{% block body %}
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <a href="{{ path('landing') }}"><img class="mx-auto h-10 w-auto" src="{{ asset('img/turtunicorn.png') }}" alt="Monitortoise"></a>
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+       {{ form_start(magicLinkRequestForm, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6'}}) }}
+        <div>
+            {{ form_row(magicLinkRequestForm.email, {'attr': {'class': 'magicLinkEmailInput'}} ) }}
+        </div>
+
+        <div>
+          <button type="submit" class="flex w-full justify-center gap-x-2 rounded-lg bg-indigo-600 px-3.5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+            </svg>
+
+            Send me a magic link!
+          </button>
+        </div>
+
+
+        <div class="flex bg-indigo-100 border-b border-indigo-500 text-indigo-700 px-4 py-3" role="alert">
+            <svg class="h6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+            </svg>
+            <p class="text-sm">
+                To sign in we will send a secured magic link directly in your mailbox.</p>
+            </div>
+        </div>
+    {{ form_end(magicLinkRequestForm) }}
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      Not a member?
+      <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Find out how to have an account</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
