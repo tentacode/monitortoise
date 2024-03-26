@@ -46,6 +46,9 @@ test: ## Run all tests
 	bin/console lint:twig templates
 	bin/ecs
 
+storybook: ## Run Storybook
+	pnpm run storybook --no-open
+
 provision-server: ## Provision server
 	ansible-playbook -i ansible/hosts ansible/provision-server.yml --extra-vars="@ansible/monitortoise-vars.yml"
 
