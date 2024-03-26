@@ -28,7 +28,7 @@
             </div>
             <div class="lg:flex lg:flex-1 lg:justify-end">
                 {% if is_granted('IS_AUTHENTICATED') %}
-                    <a href="{{ url('user_account') }}" class="text-sm font-semibold leading-6 text-gray-900">
+                    <a href="{{ url('add_link') }}" class="text-sm font-semibold leading-6 text-gray-900">
                         My account <span aria-hidden="true">&rarr;</span>
                     </a>
                 {% else %}

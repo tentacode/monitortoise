@@ -27,7 +27,7 @@ describe('magic link', () => {
 
             cy.findByText('My account').safeClick()
 
-            cy.contains('Connecté en tant que tentacode.')
+            cy.contains('Add a link')
         })
     })
   })
