@@ -3,6 +3,12 @@
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/tentacode/PHPScraper"
+        }
+    ],    
     "require": {
         "php": ">=8.3",
         "ext-ctype": "*",
@@ -11,6 +17,8 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "spekulatius/phpscraper": "dev-upgrading-to-sf7",
+        "symfony/cache": "7.0.*",
         "symfony/console": "7.0.*",
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
