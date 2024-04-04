@@ -28,3 +28,6 @@ services:
     # please note that last definitions always *replace* previous ones
     Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface: '@security.authenticator.login_link_handler.main'
 
+    Spekulatius\PHPScraper\PHPScraper:
+        public: false
+

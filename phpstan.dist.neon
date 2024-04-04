@@ -7,5 +7,6 @@ parameters:
 
     level: max
 
-    #excludePaths:
-    #    - app/Something.php
+    excludePaths:
+        # Too much magic in PHPScraper
+        - src/Feature/Scraper/Query/ScrapUrl.php
