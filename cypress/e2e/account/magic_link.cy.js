@@ -23,7 +23,8 @@ describe('magic link', () => {
 
             cy.findByText('My account').safeClick()
 
-            cy.contains('Add a link')
+            cy.url().should('include', '/links')
+            cy.title().should('eq', 'Link list')
         })
     })
   })

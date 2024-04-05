@@ -51,10 +51,6 @@ Cypress.Commands.add('login', (userEmail) => {
             cy.expect(email.To[0].Address).to.eq('gabriel@tentacode.test')
             
             cy.visit(Mailbox.getCtaUrl(email))
-
-            cy.findByText('My account').safeClick()
-
-            cy.contains('Add a link')
         })
     })
   })
