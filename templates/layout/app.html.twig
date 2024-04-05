@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="h-full bg-white">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Monitortoise{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="h-full">
+		<div>
+			<!-- Static sidebar for desktop -->
+			<div class="fixed inset-y-0 z-50 flex w-72 flex-col">
+				<!-- Sidebar component, swap this element with another sidebar if you like -->
+				<div class="flex grow flex-col gap-y-5 overflow-y-auto bg-lime-100 px-6">
+					<div class="flex h-16 shrink-0 items-center">
+                        <a href="{{ path('landing')}}">
+                            <img class="h-8 w-auto" src="{{ asset('img/turtunicorn.png') }}" alt="">
+                        </a>
+					</div>
+					<nav class="flex flex-1 flex-col">
+						<ul role="list" class="flex flex-1 flex-col gap-y-7">
+							<li>
+								<ul role="list" class="-mx-2 space-y-1">
+									<li>
+										<a 
+                                            href="{{ path('link_list') }}"
+                                            {% if app.request.get('_route') == 'link_list' %}
+                                                class="bg-lime-200 text-black group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                            {% else %}
+                                                class="hover:bg-lime-200 text-black group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                            {% endif %}
+                                        >
+                                            <svg class="w-6 h-6 shrink-0 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                                            </svg>
+
+											Links
+										</a>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="mt-auto pb-4">
+								<ul role="list" class="-mx-2 space-y-1">
+									<li>
+										<!-- Current: "bg-lime-700 text-white", Default: "text-lime-200 hover:text-white hover:bg-lime-700" -->
+										<a href="{{ path('add_link') }}" class="hover:bg-lime-400  bg-lime-300 text-black group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                            <svg class="h-6 w-6 shrink-0 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>
+
+											Add a Link
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+			<main class="py-10 pl-72">
+				<div class="sm:px-6 px-8">
+                    {% block body %}{% endblock %}
+				</div>
+			</main>
+		</div>
+
+	</body>
+</html>
