@@ -1,10 +1,6 @@
 import Mailbox from '../../features/Mailbox'
 
 describe('magic link', () => {
-    beforeEach(() => {
-        Mailbox.deleteAllEmails()
-    })
-
     it('can sign in with an existing account', () => {
         cy.visit('/')
 

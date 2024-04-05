@@ -17,6 +17,11 @@
 import './commands'
 
 import '@testing-library/cypress/add-commands'
+import Mailbox from '../features/Mailbox'
+
+beforeEach(() => {
+    Mailbox.deleteAllEmails()
+})
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
