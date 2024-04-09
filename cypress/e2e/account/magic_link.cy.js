@@ -21,6 +21,10 @@ describe('magic link', () => {
             
             cy.visit(Mailbox.getCtaUrl(email))
 
+            cy.url().should('include', '/links')
+            cy.title().should('eq', 'Link list')
+
+            cy.visit('/')
             cy.findByText('My account').safeClick()
 
             cy.url().should('include', '/links')
