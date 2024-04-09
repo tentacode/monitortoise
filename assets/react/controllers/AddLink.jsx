@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { LinkIcon } from "@heroicons/react/20/solid";
 import LinkPreview from "../components/LinkPreview";
+import IsReadToggle from "../components/IsReadToggle";
 import { DebounceInput } from "react-debounce-input";
 
 export default function AddLink() {
@@ -22,6 +22,7 @@ export default function AddLink() {
   //   imageUrl: "https://tentacode.dev/img/posts/alecoutedumarche.jpg",
   // });
   const [link, setLink] = useState(null);
+  const [isRead, setIsRead] = useState(false)
   const [loading, setLoading] = useState(false);
 
   function handleInputChange(e) {
@@ -64,6 +65,29 @@ export default function AddLink() {
           />
         </div>
       </div>
+
+      <IsReadToggle
+        onChange={setIsRead}
+        isRead={isRead}
+        className="mt-4" />
+
+      <button className="flex mt-4 hover:bg-lime-400  bg-lime-300 text-black font-bold py-2 px-4 pl-2 rounded">
+        <svg
+          className="h-6 w-6 shrink-0 text-black"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+        Add Link
+      </button>
 
       <button
         onClick={() => {
