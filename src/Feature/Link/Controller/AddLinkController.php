@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Feature\Link\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class LinkListController extends AbstractController
+class AddLinkController extends AbstractController
 {
-    #[Route('/links', name: 'link_list')]
+    #[Route('/add-link', name: 'add_link')]
     public function __invoke(): Response
     {
-        return $this->render('link/link_list.html.twig', [
+        return $this->render('link/add_link.html.twig', [
         ]);
     }
 }

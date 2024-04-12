@@ -6,3 +6,7 @@ controllers:
 
 login_check:
     path: /login_check
+
+feature_link:
+    resource: '../src/Feature/Link/Controller'
+    type: attribute

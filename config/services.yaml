@@ -31,3 +31,8 @@ services:
     Spekulatius\PHPScraper\PHPScraper:
         public: false
 
+    # Exception listener
+    App\Framework\ErrorHandling\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
