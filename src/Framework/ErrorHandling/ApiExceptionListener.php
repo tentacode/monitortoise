@@ -7,10 +7,11 @@ namespace App\Framework\ErrorHandling;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
+use Webmozart\Assert\Assert;
 
 class ApiExceptionListener
 {
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -33,7 +34,7 @@ class ApiExceptionListener
 
         $event->setResponse($response);
     }
-    
+
     private function createExceptionResponse(\Throwable $exception): Response
     {
         $data = [
@@ -42,12 +43,16 @@ class ApiExceptionListener
             'message' => $exception->getMessage(),
         ];
 
-        return new Response(json_encode($data), Response::HTTP_INTERNAL_SERVER_ERROR, ['Content-Type' => 'application/json']);
+        $jsonString = json_encode($data);
+        Assert::string($jsonString);
+
+        return new Response($jsonString, Response::HTTP_INTERNAL_SERVER_ERROR, [
+            'Content-Type' => 'application/json',
+        ]);
     }
 
     private function createValidationErrorResponse(ValidationFailedException $exception): Response
     {
-
         $errors = [];
         foreach ($exception->getViolations() as $violation) {
             $errors[$violation->getPropertyPath()][] = $violation->getMessage();
@@ -59,7 +64,11 @@ class ApiExceptionListener
             'errors' => $errors,
         ];
 
-        return new Response(json_encode($data), Response::HTTP_UNPROCESSABLE_ENTITY, ['Content-Type' => 'application/json']);
+        $jsonString = json_encode($data);
+        Assert::string($jsonString);
+
+        return new Response($jsonString, Response::HTTP_UNPROCESSABLE_ENTITY, [
+            'Content-Type' => 'application/json',
+        ]);
     }
 }
-
