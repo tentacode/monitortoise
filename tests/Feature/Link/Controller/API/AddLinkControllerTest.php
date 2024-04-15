@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Feature\Link\Controller\API;
 
 use App\Repository\UserRepository;
-use Helmich\JsonAssert\JsonAssertions;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -19,7 +20,7 @@ class AddLinkControllerTest extends WebTestCase
         $this->expectException(AccessDeniedException::class);
         $client->request('POST', '/api/link');
     }
-    
+
     #[Test]
     public function it_cannot_add_an_invalid_link()
     {
@@ -37,7 +38,9 @@ class AddLinkControllerTest extends WebTestCase
         $client->request(
             method: 'POST',
             uri: '/api/link',
-            server: ['CONTENT_TYPE' => 'application/json'],
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
             content: json_encode($payload),
         );
 
@@ -47,11 +50,11 @@ class AddLinkControllerTest extends WebTestCase
         $this->assertJson($response->getContent());
 
         $json = json_decode($response->getContent(), true);
-        
+
         $this->assertEquals('validation_error', $json['type']);
         $this->assertEquals('The given data was invalid.', $json['message']);
         $this->assertEquals(['This value is not a valid URL.'], $json['errors']['url']);
-        $this->assertEquals(["This value should be of type bool."], $json['errors']['isRead']);
+        $this->assertEquals(['This value should be of type bool.'], $json['errors']['isRead']);
     }
 
     #[Test]
@@ -71,7 +74,9 @@ class AddLinkControllerTest extends WebTestCase
         $client->request(
             method: 'POST',
             uri: '/api/link',
-            server: ['CONTENT_TYPE' => 'application/json'],
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
             content: json_encode($payload),
         );
 
@@ -84,6 +89,5 @@ class AddLinkControllerTest extends WebTestCase
         $this->assertEquals('http://127.0.0.1', $json['url']);
         $this->assertEquals(false, $json['isRead']);
         // $this->assertMatchesRegularExpression('/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/', $json['uid']);
-
     }
 }

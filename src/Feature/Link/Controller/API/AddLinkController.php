@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Feature\Link\Controller\API;
 
+use App\Feature\Link\Action\AddUserLink;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class AddLinkController extends AbstractController
 {
     public function __construct(
         private ValidatorInterface $validator,
+        private AddUserLink $addUserLink,
     ) {
     }
 
@@ -31,6 +33,8 @@ class AddLinkController extends AbstractController
         if (count($constraints) > 0) {
             throw new ValidationFailedException($linkInput, new ConstraintViolationList($constraints));
         }
+
+        ($this->addUserLink)();
 
         return new JsonResponse([
             'url' => $linkInput->url,
